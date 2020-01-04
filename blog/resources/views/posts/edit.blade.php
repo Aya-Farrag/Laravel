@@ -3,10 +3,18 @@
 @section('content')
 
 
-
+<br><br><br>
 <h3>Update Post</h3>
-{{$post->title}}
-{{$post->content}}
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
 <form method="POST" action="/posts/{{$post->id}}">
@@ -19,7 +27,7 @@
         
         <div class="form-group">
           <label for="exampleInputEmail1">Description</label>
-          <textarea name="content"  row=20 class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='{{$post->content}}'>
+          <textarea name="content"  row=20 class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">{{$post->content}}
 </textarea>
         </div>
 
@@ -27,5 +35,4 @@
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
 
-</body>
-</html>
+@endsection

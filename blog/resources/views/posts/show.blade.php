@@ -9,3 +9,5 @@
 <p> {{$post->title}} </p>
 <h3> Description : </h3> 
 <p> {{$post->content}} </p>
+
+@endsection

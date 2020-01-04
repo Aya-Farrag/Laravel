@@ -7,6 +7,7 @@ use App\Post; //require('app/Post')
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -20,13 +21,14 @@ class PostController extends Controller
     function create (){
 
         return view('posts.create');
-
         
     }
-    function store (){
+    function store (StorePostRequest $request){
         Post::create([
+            
             'title' => request()->title,
-            'content' => request()->content
+            'content' => request()->content,
+            'user_id' => $request->user()->id
         ]);
         return redirect()->route('posts.index');
                 
@@ -49,11 +51,13 @@ class PostController extends Controller
 
     }
 
-    function update ($id){
+    function update ($id,StorePostRequest $request){
+        
 
         DB::table('posts')
             ->where('id', $id)
-            ->update(['title' => request()->title, 'content'=> request()->content]);
+            ->update(['title' => request()->title, 'content'=> request()->content, 'user_id' => request()->user()->id]
+        );
             return redirect()->route('posts.index');
     }
 

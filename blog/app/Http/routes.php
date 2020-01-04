@@ -11,14 +11,19 @@
 |
 */
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/posts', 'PostController@index')->name('posts.index') ;
-Route::get('/posts/create', 'PostController@create')->name('posts.create') ;
-Route::post('/posts', 'PostController@store');
-Route::get('/posts/{post}', 'PostController@show')->name('posts.show') ; ///{} this means a dynamic content : variable that takes its value from the entered url
-Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit') ; ///{} this means a dynamic content : variable that takes its value from the entered url
-Route::put('/posts/{post}', 'PostController@update')->name('posts.update') ; ///{} this means a dynamic content : variable that takes its value from the entered url
-Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy') ; ///{} this means a dynamic content : variable that takes its value from the entered url
+Route::get('/posts', 'PostController@index')->name('posts.index')
+-> middleware('auth') ;
+Route::get('/posts/create', 'PostController@create')->name('posts.create') -> middleware('auth') ;
+Route::post('/posts', 'PostController@store')-> middleware('auth') -> middleware('auth');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show') -> middleware('auth'); ///{} this means a dynamic content : variable that takes its value from the entered url
+Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit') -> middleware('auth'); ///{} this means a dynamic content : variable that takes its value from the entered url
+Route::put('/posts/{post}', 'PostController@update')->name('posts.update') -> middleware('auth'); ///{} this means a dynamic content : variable that takes its value from the entered url
+Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy') -> middleware('auth') ; ///{} this means a dynamic content : variable that takes its value from the entered url
 
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
